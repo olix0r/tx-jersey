@@ -1,0 +1,19 @@
+
+   Jersey
+   ------
+
+The Jersey Core libraries are primarily a set of extensions to the Twisted
+networking framework [http://twistedmatrix.com].   The following modules are
+provided:
+
+   - jersey.cli --  Provides a framework for writing lightweight, pluggable
+                    Command Line utilities.  Extends twisted.application.
+
+   - jersey.log --  Extends twisted.python.log with additional logging methods
+		    and an Observer that can filter events based on log level.
+
+   - jersey.inet -- Internet Address representations.
+
+
+This software is distributed under a 3-Clause BSD license.  See the LICENSE file
+for details.
