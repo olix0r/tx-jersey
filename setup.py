@@ -21,38 +21,29 @@ version = getVersion()
 
 
 setup(
-    name = "jersey",
+    name = version.package,
     version = version.short(),
 
     description = "Jersey Core Libraries",
     long_description = description,
 
-    author = "Oliver Gould", author_email = "ver@yahoo-inc.com",
-    maintainer = "Jersey-Devel", maintainer_email = "jersey-devel@yahoo-inc.com",
+    author = "Oliver Gould", author_email = "jersey@olix0r.net",
+    maintainer = "Oliver Gould", maintainer_email = "jersey@olix0r.net",
 
-    package_dir = {
-        "jersey": "lib",
-        },
-    packages = [
-        "jersey",
-        "jersey.cases",
-        ],
-    py_modules = [
-        "jersey._version",
-        "jersey.cli",  "jersey.cases.test_cli",
-        "jersey.inet", "jersey.cases.test_inet",
-        "jersey.log",  "jersey.cases.test_log",
+    license = "BSD",
+    classifiers = [
+        "Development Status :: 4 - Beta",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Programming Language :: Python",
         ],
 
-    provides = [
-        "jersey",
-        "jersey.cli",
-        "jersey.log",
-        ],
-    requires = [
-        "twisted (>=9.0.0)",
-        ],
+    package_dir = {"jersey": "lib", },
+    packages = ["jersey", "jersey.cases", ],
 
+    provides = ["jersey", "jersey.cli", "jersey.inet", "jersey.log", ],
+    requires = ["twisted (>=9.0.0)", ],
     )
 
 
