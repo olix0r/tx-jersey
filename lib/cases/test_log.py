@@ -369,4 +369,16 @@ class CLIObserverEmitCases(CLIObserverTestBase, TestCase):
         self.assertEquals(self.wokka+"\n", self.stream.wrote)
 
 
+    def test_streamEncodeText(self):
+        import zlib
+        self.stream.encoding = "zip"
+        text = unicode("\u00a7pecial message!!")
+        self.assertEquals(unicode, type(text))
+        encoded = self.observer._streamEncodeText(self.stream, text)
+        try:
+            self.assertEquals(text, encoded.decode("zip"))
+        except:
+            self.fail("Not encoded data: {0!r}".format(encoded))
+        self.assertEquals(str, type(encoded))
+
 
