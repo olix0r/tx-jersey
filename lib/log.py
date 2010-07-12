@@ -63,6 +63,21 @@ class CLILogObserver(object):
         self._err = err
 
 
+    def __call__(self, event):
+        return self.emit(event)
+
+
+    def emit(self, event):
+        """Log the event if it is sufficient."""
+        self._initializeEvent(event)
+
+        if self._isLogworthy(event):
+            stream = self._getStream(event)
+            text = self._formatText(event)
+            text = self._streamEncodeText(stream, text)
+            self._write(stream, text)
+
+
     def _initializeEvent(self, event):
         """Ensure that all necessary keys are set in the event dict."""
         if event.get("isError"):
@@ -135,21 +150,20 @@ class CLILogObserver(object):
         # prefix each line of output and append a final newline
         prefix = self._getPrefix(event)
         text = prefix + event["text"].replace("\n", "\n"+prefix) + "\n"
-
         return text
 
 
-    def emit(self, event):
-        """Log the event if it is sufficient."""
-        self._initializeEvent(event)
+    @staticmethod
+    def _streamEncodeText(stream, text):
+        encoding = getattr(stream, "encoding", None)
+        if encoding:
+            text = text.encode(encoding)
+        return text
 
-        if self._isLogworthy(event):
-            stream = self._getStream(event)
-            text = self._formatText(event)
-            # Handles EINTR:
-            untilConcludes(stream.write, text)
-            untilConcludes(stream.flush)
 
-    __call__ = emit
+    @staticmethod
+    def _write(stream, text):
+        untilConcludes(stream.write, text)
+        untilConcludes(stream.flush)
 
 

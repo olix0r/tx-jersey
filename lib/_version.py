@@ -1,6 +1,6 @@
 from twisted.python.versions import Version
 
-version = Version("jersey", 0, 1, 1)
+version = Version("jersey", 0, 1, 2)
 
 copyright = "Copyright 2010, Yahoo! Inc.  All rights reserved."
 
