@@ -1,13 +1,10 @@
 #/usr/bin/env python2.6
-#
-# $Id: setup.py 87 2010-07-01 18:01:03Z ver $
-
-from distutils.core import setup
 
 
-description = """
-The Jersey core libraries provide common abstractions used by Jersey software.
-"""
+try:
+    from setuptools import setup
+except:
+    from distutils.core import setup
 
 
 def getVersion():
@@ -25,15 +22,17 @@ setup(
     version = version.short(),
 
     description = "Jersey Core Libraries",
-    long_description = description,
+    long_description = open("README").read(),
 
     author = "Oliver Gould", author_email = "jersey@olix0r.net",
     maintainer = "Oliver Gould", maintainer_email = "jersey@olix0r.net",
+    url = "http://jersey.olix0r.net",
 
     license = "BSD",
     classifiers = [
         "Development Status :: 4 - Beta",
         "Environment :: Console",
+        "Framework :: Twisted",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
