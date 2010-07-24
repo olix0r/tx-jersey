@@ -3,10 +3,10 @@
 import os, sys
 
 from twisted.application import app
-from twisted.application.service import Application, MultiService
+from twisted.application.service import Application, MultiService, Service
 from twisted.internet import reactor
 from twisted.internet.defer import (Deferred, succeed, fail,
-        inlineCallbacks, returnValue, maybeDeferred)
+        inlineCallbacks, returnValue, maybeDeferred, gatherResults)
 from twisted.plugin import getPlugins
 from twisted.python import usage
 from twisted.python.failure import Failure
@@ -56,10 +56,17 @@ class Command(MultiService):
         self.config = config
         self.exit = Deferred()
 
+    @inlineCallbacks
     def startService(self):
         """Initiate execution."""
-        MultiService.startService(self)
-        reactor.callLater(0, self._execute)
+        Service.startService(self)
+        ds = []
+        for svc in self:
+            log.debug("{0} starting service: {1}".format(self, svc))
+            d = maybeDeferred(svc.startService)
+            ds.append(d)
+        yield gatherResults(ds)
+        yield self._execute()
 
     def _execute(self):
         """Ensure that exit is called with the result of execute."""
