@@ -1,10 +1,6 @@
 #/usr/bin/env python2.6
 
-
-try:
-    from setuptools import setup
-except:
-    from distutils.core import setup
+from setuptools import setup
 
 
 def getVersion():
@@ -42,7 +38,8 @@ setup(
     packages = ["jersey", "jersey.cases", ],
 
     provides = ["jersey", "jersey.cli", "jersey.inet", "jersey.log", ],
-    requires = ["twisted (>=9.0.0)", ],
+    setup_requires = ["twisted", ],
+    install_requires = ["twisted>=9.0.0", ],
     )
 
 
