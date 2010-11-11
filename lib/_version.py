@@ -1,6 +1,23 @@
-from twisted.python.versions import Version
+try:
+  from twisted.python.versions import Version
 
-version = Version("jersey", 0, 1, 4)
+except ImportError:
+  class Version(object):
+    def __init__(self, package, major, minor, nano, pre=None):
+      self.package = package
+      self.major = major
+      self.minor = minor
+      self.nano = nano
+      self.pre = pre
+
+    def short(self):
+      fmt = "{0.major}.{0.minor}.{0.nano}"
+      if self.pre:
+        fmt += "pre{0.pre}"
+      return fmt.format(self)
+
+
+version = Version("jersey", 0, 1, 5)
 
 copyright = "Copyright 2010, Yahoo! Inc.  All rights reserved."
 
